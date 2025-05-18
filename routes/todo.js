@@ -4,14 +4,15 @@ const {
     getTodos,
     createTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    viewTodo
 } = require('../controllers/todoController')
 
 
 router.route('/').get(getTodos).post(createTodo);
 
 
-router.route('/:id').patch(updateTodo).delete(deleteTodo);
+router.route('/:id').patch(updateTodo).delete(deleteTodo).get(viewTodo);
 
 
 module.exports = router;

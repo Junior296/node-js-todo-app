@@ -45,7 +45,7 @@ const deleteTodo = async (req, res) => {
         const todo = await Todo.findById(todoId);
         if (!todo) return res.status(404).json({ message: 'Todo not found' });
 
-        const toDeleteTodo = await todo.deleteOne();
+        await todo.deleteOne();
 
         res.status(200).json({ message: 'Todo deleted' });
 
@@ -55,9 +55,27 @@ const deleteTodo = async (req, res) => {
     }
 };
 
+const viewTodo = async (req, res) => {
+try {
+    const todoId = req.params.id;
+    const todo = await Todo.findById(todoId);
+
+    if (!todo) return res.status(404).json({ message: 'Todo not found' });
+    
+    res.status(200).json({
+        id: todo._id,
+        name: todo.name,
+        completed: todo.completed
+    });
+} catch (error) {
+    res.status(500).json({ message: error.message });
+}
+}
+
 module.exports = {
     getTodos,
     createTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    viewTodo
 }
